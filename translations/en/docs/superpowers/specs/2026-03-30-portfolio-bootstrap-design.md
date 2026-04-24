@@ -2,43 +2,43 @@
 
 ## Background
 
-The current repository already contains the requirement documents `PRD.md`, `TECH_DESIGN.md`, and `AGENT.md`, and the Git history still retains an old static‑site implementation. The scope of approval for this change is limited to project initialization: set up a React + TypeScript + Vite project in the current repository, install and configure Tailwind CSS, and create the basic source‑code structure as required by the documentation. This does **not** include implementing the portfolio page content, nor migrating the old static site to React.
+The current repository already contains requirement documents `PRD.md`, `TECH_DESIGN.md`, and `AGENT.md`. Additionally, an older static website implementation is preserved in the Git history. The scope of approval for this change is limited to project initialization: setting up a React + TypeScript + Vite project within the current repository, installing and configuring Tailwind CSS, and establishing the basic source code structure as required by the documentation. This does not include the implementation of portfolio page content or the migration of the old static site to React.
 
 ## Goals
 
-- Initialize a React, TypeScript, and Vite project at the root of the current repository.  
-- Install and configure Tailwind CSS so it can be used directly in application development.  
-- Create the basic directory structure `src/components` and `src/data` defined in `TECH_DESIGN.md`.  
-- Add minimal, runnable placeholder components and data files to ensure the project can build successfully and provide a stable entry point for subsequent page development.
+- Initialize a React, TypeScript, and Vite project in the root directory of the current repository.
+- Install and configure Tailwind CSS, making it ready for application development.
+- Establish the basic directory structure of `src/components` and `src/data` as defined in `TECH_DESIGN.md`.
+- Add minimal, runnable placeholder components and data files to ensure the project can build successfully and provide stable entry points for subsequent page development.
 
-## Non‑Goals
+## Non-Goals
 
-- Do not implement the final portfolio page UI.  
-- Do not migrate the existing `index.html`, `script.js`, `styles.css` to React.  
-- Do not introduce routing at this stage, unless a later requirement explicitly demands it.  
-- Do not install optional runtime dependencies such as `Framer Motion` that are not yet used.
+- Do not implement the final portfolio page UI.
+- Do not migrate the original `index.html`, `script.js`, `styles.css` to React.
+- Do not introduce routing at this stage unless explicitly required by future needs.
+- Do not install optional runtime dependencies like `Framer Motion` that are not yet in use at this stage.
 
-## Recommended Approach
+## Recommended Solution
 
-Use Vite’s official React + TypeScript template as the project foundation, then manually install and configure Tailwind CSS. This keeps the implementation aligned with the current technical design, avoids unnecessary dependencies, and leaves a clean, maintainable starting point for future page design and animation extensions.
+Use the official Vite React + TypeScript template as the project foundation, and then manually install and configure Tailwind CSS. This approach aligns with the current technical design, avoids introducing unnecessary dependencies, and provides a clean, maintainable starting point for future page design and animation extensions.
 
-## Alternative Approaches
+## Alternative Solutions
 
-### 1. Use Vite to initialize React + TypeScript and manually integrate Tailwind  
+### 1. Initialize React + TypeScript with Vite and Manually Integrate Tailwind
 
-**Recommended**. This aligns best with the current technical design, offers a simple and clear structure, and serves as the most suitable base for subsequent portfolio development.
+This is the recommended solution. It aligns best with the current technical design, offers a simple and clear structure, and is most suitable as a foundational project for subsequent portfolio development.
 
-### 2. Install React Router while initializing Vite  
+### 2. Install React Router During Vite Initialization
 
-Not recommended at this stage. The existing PRD leans toward a single‑page portfolio experience; adding routing too early introduces extra files, dependencies, and decision overhead without immediate benefit.
+Not recommended at this stage. The existing PRD leans towards a single-page portfolio experience. Introducing routing prematurely would add extra files, dependencies, and decision-making overhead without immediate practical benefits.
 
-### 3. Convert the old static site to React during initialization  
+### 3. Convert the Old Static Site to React During Initialization
 
-Not recommended at this stage. Mixing “project setup” with “UI migration” increases verification cost and blurs the delivery boundary for this task.
+Not recommended at this stage. This would conflate "project setup" with "interface migration," increasing validation costs and blurring the boundaries of this delivery.
 
 ## Project Structure
 
-After initialization, the source hierarchy should contain at least the following:
+The initialized source code hierarchy should include at least the following:
 
 ```text
 src/
@@ -56,35 +56,35 @@ src/
   main.tsx
 ```
 
-`App.tsx` is responsible for assembling these placeholder sections in order. Each component should be implemented as a simple functional component with brief comments where necessary. Data files should export minimal yet type‑safe arrays, ensuring easy future extension and a successful current build.
+`App.tsx` will be responsible for assembling these placeholder sections in order. Each component will be implemented as a simple functional component with brief comments where necessary. Data files will export minimal but valid typed arrays to facilitate future expansion and ensure the project builds correctly.
 
 ## Styling Strategy
 
-- Use Tailwind CSS as the primary styling solution.  
-- During initialization, provide only the basic styles needed to verify that Tailwind has been correctly integrated.  
-- Dark‑theme visual details required by `PRD.md` and `AGENT.md` will be handled in a later dedicated UI implementation phase, not in this initialization.
+- Use Tailwind CSS as the primary styling solution.
+- The initialization phase only needs to provide basic styles sufficient to verify that Tailwind has been correctly integrated.
+- Dark theme visual details required by `PRD.md` and `AGENT.md` will be handled in a subsequent, dedicated UI implementation phase, not during this initialization.
 
 ## Data Flow
 
-- `src/data/projects.ts` stores placeholder project data.  
-- `src/data/skills.ts` stores placeholder skill data.  
-- At this stage, display components import these arrays directly.  
-- This approach satisfies the “data stored in TypeScript files” requirement and facilitates quick addition or removal of content later.
+- `src/data/projects.ts` will store placeholder project data.
+- `src/data/skills.ts` will store placeholder skill data.
+- At this stage, display components will directly import these arrays.
+- This approach satisfies the requirement of "data stored in TypeScript files" and allows for quick content addition or removal later.
 
 ## Error Handling
 
-- Runtime risk is low during initialization.  
-- Main risks are dependency installation, Tailwind configuration, and TypeScript import errors.  
-- These issues will surface quickly during a production build after initialization.
+- The runtime risks during the initialization phase are low.
+- The primary risks are concentrated in dependency installation, Tailwind configuration, and TypeScript import errors.
+- These issues will be quickly exposed by a production build after initialization.
 
-## Testing & Verification
+## Testing and Verification
 
-- Dependencies install successfully.  
-- Run `npm run build`.  
-- Confirm that the generated code, with Tailwind integrated, still passes TypeScript and Vite compilation.
+- Dependency installation is successful.
+- Run `npm run build`.
+- Confirm that the generated code can still be built by TypeScript and Vite after integrating Tailwind.
 
 ## Implementation Notes
 
-- The repository’s Git status still shows the old static files as deleted; this initialization will not attempt to restore or migrate those files.  
-- The work should focus on adding a new React scaffolding, keeping the change scope clear.  
+- The current Git state of the repository shows the old static files as deleted. This initialization will not attempt to restore or migrate these files.
+- This work should primarily focus on adding the React project scaffolding, keeping the scope of changes clear.
 - The generated initial structure should be as lightweight as possible to facilitate future expansion.

@@ -1,27 +1,27 @@
 # Projects Component Implementation Plan
 
-> **Requirement for execution‑type agents:** Must use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to execute tasks step‑by‑step. This plan tracks steps with `- [ ]` checkboxes.
+> **Requirement for Executing Agent:** Must use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to execute tasks step-by-step. This plan uses `- [ ]` checkboxes to track steps.
 
-**Goal:** Implement a **Projects** component that displays a list of projects. Each project card should contain a screenshot area, title, description, and technology‑stack tags, and it must match the current dark theme.
+**Goal:** Implement a Projects component that displays a list of projects. Each project card should include a screenshot area, title, description, and tech stack tags, consistent with the current dark theme.
 
-**Architecture:** Keep the existing `projects` data structure unchanged. Implement a column‑based information‑card layout inside `Projects.tsx`. First, write tests that constrain the core structure of each project card, then add high‑quality placeholder screenshot blocks, dark‑card styling, and responsive layout. Only modify the placeholder project data, the Projects component, and the corresponding test file.
+**Architecture:** Keep the existing `projects` data structure unchanged. Implement a multi-column information card layout within `Projects.tsx`. Use test-driven development to constrain the core structure of the project cards first, then add high-fidelity placeholder screenshots, dark card styling, and responsive layout. Only modify placeholder project data, the Projects component, and the corresponding test file.
 
 **Tech Stack:** React, TypeScript, Vite, Tailwind CSS v4, Vitest, Testing Library
 
 ---
 
-## File‑Structure Mapping
+## File Structure Mapping
 
-- **Create:** `src/components/Projects.test.tsx`
-- **Modify:** `src/components/Projects.tsx`
-- **Modify:** `src/data/projects.ts`
+- Create: `src/components/Projects.test.tsx`
+- Modify: `src/components/Projects.tsx`
+- Modify: `src/data/projects.ts`
 
-### Task 1 – Write the Projects Structure Test First
+### Task 1: Write Projects Structure Tests First
 
-**File:**  
-- **Create:** `src/components/Projects.test.tsx`
+**File:**
+- Create: `src/components/Projects.test.tsx`
 
-- [ ] **Step 1: Write a failing test that constrains each card’s core elements**
+- [ ] **Step 1: Write failing tests to constrain the core elements of each card**
 
 Create `src/components/Projects.test.tsx`:
 
@@ -71,41 +71,41 @@ describe("Projects", () => {
 });
 ```
 
-- [ ] **Step 2: Run the test and confirm it fails**
+- [ ] **Step 2: Run tests and confirm they fail initially**
 
 Run: `npm run test -- src/components/Projects.test.tsx`
 
-**Expected result:** Failure, because the current `Projects.tsx` does not yet provide an accessible screenshot preview area or the required semantic structure for project cards.
+Expected: Failure, because the current `Projects.tsx` does not yet provide an accessible screenshot preview area and project card semantic structure.
 
-### Task 2 – Implement the Project List with Column Cards
+### Task 2: Implement Project List and Column Cards
 
-**Files:**  
-- **Modify:** `src/components/Projects.tsx`  
-- **Modify:** `src/data/projects.ts`
+**Files:**
+- Modify: `src/components/Projects.tsx`
+- Modify: `src/data/projects.ts`
 
-- [ ] **Step 1: Add placeholder data that looks more like a “project list”**
+- [ ] **Step 1: Populate Placeholder Data for "Project List"**
 
-Adjust `src/data/projects.ts` to contain at least three project items while keeping the type structure unchanged. Example:
+Adjust `src/data/projects.ts` to include at least 3 project items, maintaining the same type structure. Example:
 
 ```ts
 export const projects: ProjectItem[] = [
   {
-    name: "个人作品集网站",
-    description: "用于承载个人介绍、项目展示与联系方式的作品集入口页面。",
+    name: "Personal Portfolio Website",
+    description: "A portfolio entry page to host personal introductions, project showcases, and contact information.",
     techStack: ["React", "TypeScript", "Vite", "Tailwind CSS"],
     image: "",
     link: "https://example.com/portfolio",
   },
   {
-    name: "创作者工具箱",
-    description: "一个用于整理内容生产流程、灵感记录和发布节奏的个人工作台原型。",
+    name: "Creator Toolbox",
+    description: "A prototype personal workbench for organizing content production workflows, capturing inspiration, and managing publishing schedules.",
     techStack: ["React", "Node.js", "Design System"],
     image: "",
     link: "https://example.com/toolkit",
   },
   {
-    name: "品牌活动落地页",
-    description: "强调视觉节奏、信息转化和移动端体验的品牌营销页面概念稿。",
+    name: "Brand Campaign Landing Page",
+    description: "A concept design for a brand marketing page emphasizing visual rhythm, information conversion, and mobile experience.",
     techStack: ["Vite", "Tailwind CSS", "Motion"],
     image: "",
     link: "https://example.com/campaign",
@@ -113,9 +113,9 @@ export const projects: ProjectItem[] = [
 ];
 ```
 
-- [ ] **Step 2: Implement column cards with a placeholder screenshot block**
+- [ ] **Step 2: Implement Column Cards and Placeholder Screenshot Blocks**
 
-Replace `src/components/Projects.tsx` with the following:
+Adjust `src/components/Projects.tsx` as follows:
 
 ```tsx
 import { projects } from "../data/projects";
@@ -123,7 +123,7 @@ import { projects } from "../data/projects";
 function ProjectPreview({ name }: { name: string }) {
   return (
     <div
-      aria-label={`${name} 项目截图预览`}
+      aria-label={`${name} project screenshot preview`}
       className="relative min-h-[240px] overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(8,15,30,0.96),rgba(15,23,42,0.88),rgba(14,116,144,0.28))] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_24px_50px_rgba(2,8,23,0.34)]"
       role="img"
     >
@@ -155,8 +155,10 @@ export function Projects() {
     <section id="projects" className="mx-auto max-w-6xl px-6 py-16">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="text-sm uppercase tracking-[0.3em] text-cyan-300">Selected Projects</p>
-          <h2 className="mt-3 text-2xl font-semibold text-white md:text-3xl">项目展示</h2>
+```
+
+<p className="text-sm uppercase tracking-[0.3em] text-cyan-300">Selected Projects</p>
+          <h2 className="mt-3 text-2xl font-semibold text-white md:text-3xl">Project Showcase</h2>
         </div>
       </div>
 
@@ -191,13 +193,13 @@ export function Projects() {
                   </ul>
 
                   <a
-                    aria-label={`查看 ${project.name}`}
+                    aria-label={`View ${project.name}`}
                     className="mt-6 inline-flex items-center text-sm font-medium text-cyan-300 transition group-hover:text-cyan-200"
                     href={project.link}
                     rel="noreferrer"
                     target="_blank"
                   >
-                    查看项目
+                    View Project
                   </a>
                 </div>
               </div>
@@ -210,39 +212,39 @@ export function Projects() {
 }
 ```
 
-- [ ] **Step 3: Run the test to confirm it passes**
+- [ ] **Step 3: Run Unit Tests to Confirm Success**
 
 Run: `npm run test -- src/components/Projects.test.tsx`
 
-**Expected result:** Pass, indicating that each project card now includes a screenshot area, title, description, tags, and link.
+Expected: Pass, indicating that each project card has a screenshot area, title, description, tags, and link.
 
-### Task 3 – Full Verification of Changes
+### Task 3: Full Verification of Changes
 
-**Files:**  
-- Verify: `src/components/Projects.tsx`  
-- Verify: `src/components/Projects.test.tsx`  
+**Files:**
+- Verify: `src/components/Projects.tsx`
+- Verify: `src/components/Projects.test.tsx`
 - Verify: `src/data/projects.ts`
 
-- [ ] **Step 1: Run the full test suite**
+- [ ] **Step 1: Run Full Tests**
 
 Run: `npm run test`
 
-**Expected result:** All tests pass.
+Expected: All tests pass.
 
-- [ ] **Step 2: Run ESLint**
+- [ ] **Step 2: Run ESLint**
 
 Run: `npm run lint`
 
-**Expected result:** No ESLint errors.
+Expected: No ESLint errors.
 
-- [ ] **Step 3: Run a production build**
+- [ ] **Step 3: Run Production Build**
 
 Run: `npm run build`
 
-**Expected result:** TypeScript compilation and Vite build succeed.
+Expected: TypeScript compilation and Vite build complete successfully.
 
-- [ ] **Step 4: Check the Git change scope**
+- [ ] **Step 4: Check Git Change Scope**
 
 Run: `git status --short`
 
-**Expected result:** Only the changes to the Projects component and its related test, data, and documentation files appear.
+Expected: Only changes to the Projects component and related documentation, test, and data files appear.

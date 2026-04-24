@@ -1,16 +1,16 @@
 # Hero Component Implementation Plan
 
-> **Requirement for execution agents:** Must use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to execute tasks step‑by‑step. This plan tracks steps with `- [ ]` checkboxes.
+> **Requirements for Executing Agent:** Must use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to execute step-by-step tasks. This plan uses `- [ ]` checkboxes to track steps.
 
-**Goal:** Implement a Hero component that includes a main heading, an introduction, and an alphabet avatar, and style it with Tailwind CSS for a dark theme and gradient visuals.
+**Goal:** Implement a Hero component featuring a large heading, a brief introduction, and an alphabetical avatar, styled with Tailwind CSS for a dark theme and gradient visuals.
 
-**Architecture:** First add the minimal usable component test pipeline to the current Vite + React project, then use tests to constrain the core structure of the Hero component, and finally use Tailwind inside the component to achieve the above‑the‑fold layout, gradient text, glowing avatar, and responsive typography. Only modify Hero‑related implementation and the necessary test configuration; do not affect other parts of the codebase.
+**Architecture:** First, set up the minimal viable component testing pipeline for the current Vite + React project. Then, use tests to constrain the core structure of the Hero component. Finally, use Tailwind CSS within the component to achieve the initial screen layout, gradient text, glowing avatar, and responsive typography. Only modify Hero-related implementations and necessary test configurations; do not expand to other sections.
 
-**Tech stack:** React, TypeScript, Vite, Tailwind CSS v4, Vitest, Testing Library, jsdom
+**Tech Stack:** React, TypeScript, Vite, Tailwind CSS v4, Vitest, Testing Library, jsdom
 
 ---
 
-## File‑Structure Mapping
+## File Structure Mapping
 
 - Modify: `package.json`
 - Modify: `package-lock.json`
@@ -19,7 +19,7 @@
 - Create: `src/components/Hero.test.tsx`
 - Modify: `src/components/Hero.tsx`
 
-### Task 1: Add the Hero Component Test Pipeline
+### Task 1: Supplement Hero Component Testing Pipeline
 
 **Files:**
 - Modify: `package.json`
@@ -27,74 +27,62 @@
 - Modify: `vite.config.ts`
 - Create: `src/test/setup.ts`
 
-- [ ] **Step 1: Verify that the current project has no test command**
+- [ ] **Step 1: Verify the current project lacks a test command**
+  Run: `npm run test`
+  Expected: Failure with a message indicating the missing `test` script.
 
-Run: `npm run test`
+- [ ] **Step 2: Install testing dependencies**
+  Run: `npm install -D vitest jsdom @testing-library/react @testing-library/jest-dom`
+  Expected: Testing dependencies added to `package.json`.
 
-Expected: Failure with a message that the `test` script is missing.
-
-- [ ] **Step 2: Install testing dependencies**
-
-Run: `npm install -D vitest jsdom @testing-library/react @testing-library/jest-dom`
-
-Expected: Testing dependencies are added to `package.json`.
-
-- [ ] **Step 3: Add a test script to the project**
-
-Update the `scripts` section of `package.json` to:
-
-```json
-{
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "test": "vitest run",
-    "preview": "vite preview"
+- [ ] **Step 3: Add a test script to the project**
+  Adjust `package.json`'s `scripts` to:
+  ```json
+  {
+    "scripts": {
+      "dev": "vite",
+      "build": "tsc -b && vite build",
+      "lint": "eslint .",
+      "test": "vitest run",
+      "preview": "vite preview"
+    }
   }
-}
-```
+  ```
 
-- [ ] **Step 4: Add Vitest configuration to Vite**
+- [ ] **Step 4: Integrate Vitest environment into Vite configuration**
+  Adjust `vite.config.ts` to:
+  ```ts
+  import { defineConfig } from "vite";
+  import react from "@vitejs/plugin-react";
+  import tailwindcss from "@tailwindcss/vite";
 
-Modify `vite.config.ts` to:
+  export default defineConfig({
+    plugins: [react(), tailwindcss()],
+    test: {
+      environment: "jsdom",
+      setupFiles: "./src/test/setup.ts",
+      globals: true,
+    },
+  });
+  ```
 
-```ts
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
+- [ ] **Step 5: Create test initialization file**
+  Create `src/test/setup.ts`:
+  ```ts
+  import "@testing-library/jest-dom/vitest";
+  ```
 
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  test: {
-    environment: "jsdom",
-    setupFiles: "./src/test/setup.ts",
-    globals: true,
-  },
-});
-```
+- [ ] **Step 6: Run the test command to confirm the environment is ready**
+  Run: `npm run test`
+  Expected: The command should now launch Vitest. It will either finish with 0 tests due to the absence of test files or be ready for the next step of test writing.
 
-- [ ] **Step 5: Create the test setup file**
-
-Create `src/test/setup.ts`:
-
-```ts
-import "@testing-library/jest-dom/vitest";
-```
-
-- [ ] **Step 6: Run the test command to confirm the environment is ready**
-
-Run: `npm run test`
-
-Expected: The command starts Vitest and finishes with 0 tests (since no test files exist yet), or is ready for the next test writing step.
-
-### Task 2: Write Hero Structure Tests First, Then Implement the Component
+### Task 2: Write Hero Structure Tests First, Then Implement the Component
 
 **Files:**
 - Create: `src/components/Hero.test.tsx`
 - Modify: `src/components/Hero.tsx`
 
-- [ ] **Step 1: Write a failing test for Hero**
+- [ ] **Step 1: Write Failing Tests for Hero First**
 
 Create `src/components/Hero.test.tsx`:
 
@@ -108,12 +96,12 @@ describe("Hero", () => {
 
     expect(
       screen.getByRole("heading", {
-        name: /把想法、设计与前端实现组合成一个有记忆点的个人作品集/i,
+        name: /Combine ideas, designs, and front-end implementation into a memorable personal portfolio/i,
       }),
     ).toBeInTheDocument();
 
     expect(
-      screen.getByText(/这里展示我的个人介绍、项目经验和持续打磨中的数字作品/i),
+      screen.getByText(/Showcasing my personal introduction, project experience, and continuously refined digital works/i),
     ).toBeInTheDocument();
 
     expect(screen.getByText("EW")).toBeInTheDocument();
@@ -121,15 +109,15 @@ describe("Hero", () => {
 });
 ```
 
-- [ ] **Step 2: Run the test and confirm it fails**
+- [ ] **Step 2: Run Unit Tests and Confirm They Fail Initially**
 
 Run: `npm run test -- src/components/Hero.test.tsx`
 
-Expected: Failure because the current `Hero.tsx` does not render the new heading and introduction.
+Expected: Failure, because the current `Hero.tsx` does not yet render this new set of headline and introductory copy.
 
-- [ ] **Step 3: Implement the minimal code to make the test pass**
+- [ ] **Step 3: Make the Tests Pass with Minimal Implementation**
 
-Update `src/components/Hero.tsx` to:
+Adjust `src/components/Hero.tsx` to:
 
 ```tsx
 export function Hero() {
@@ -146,13 +134,13 @@ export function Hero() {
           </p>
           <div className="space-y-5">
             <h1 className="max-w-4xl text-4xl font-semibold leading-tight tracking-tight text-white md:text-6xl">
-              把想法、设计与前端实现组合成一个
+              Combine ideas, designs, and front-end implementation into a
               <span className="bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 bg-clip-text text-transparent">
-                有记忆点的个人作品集
+                memorable personal portfolio
               </span>
             </h1>
             <p className="max-w-2xl text-base leading-8 text-white/72 md:text-lg">
-              这里展示我的个人介绍、项目经验和持续打磨中的数字作品，也作为后续扩展案例、文章与实验页面的首页入口。
+              Showcasing my personal introduction, project experience, and continuously refined digital works, this also serves as the homepage entry for future case studies, articles, and experimental pages.
             </p>
           </div>
         </div>
@@ -170,13 +158,13 @@ export function Hero() {
 }
 ```
 
-- [ ] **Step 4: Run the test again to confirm it passes**
+- [ ] **Step 4: Run Unit Tests and Confirm They Pass**
 
 Run: `npm run test -- src/components/Hero.test.tsx`
 
-Expected: Pass, with only the assertions in this test file being evaluated.
+Expected: Pass, with only the assertions within this test file being effective.
 
-### Task 3: Full Verification of Hero Changes
+### Task 3: Full Verification of Hero Changes
 
 **Files:**
 - Verify: `src/components/Hero.tsx`
@@ -184,26 +172,26 @@ Expected: Pass, with only the assertions in this test file being evaluated.
 - Verify: `vite.config.ts`
 - Verify: `package.json`
 
-- [ ] **Step 1: Run the full test suite**
+- [ ] **Step 1: Run Full Tests**
 
 Run: `npm run test`
 
 Expected: All tests pass.
 
-- [ ] **Step 2: Run ESLint**
+- [ ] **Step 2: Run ESLint**
 
 Run: `npm run lint`
 
 Expected: No ESLint errors.
 
-- [ ] **Step 3: Run a production build**
+- [ ] **Step 3: Run Production Build**
 
 Run: `npm run build`
 
-Expected: Vite builds successfully and TypeScript compiles without errors.
+Expected: Vite build succeeds, TypeScript compilation passes.
 
-- [ ] **Step 4: Check the Git change scope**
+- [ ] **Step 4: Check Git Change Scope**
 
 Run: `git status --short`
 
-Expected: Only changes related to the Hero component and its test pipeline appear.
+Expected: Only changes related to the current Hero and test pipeline appear.
